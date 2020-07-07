@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"text/template"
 
 	"github.com/go-echarts/go-echarts/charts"
 )
@@ -19,6 +20,7 @@ const (
 	host          = ":8081"
 	lineChartFile = "line.html"
 	maxXAxisValue = 100
+	cacheChart    = false
 )
 
 /*
@@ -85,6 +87,26 @@ func naturalLogData() []float64 {
  */
 func logarithmHandler(w http.ResponseWriter, _ *http.Request) {
 
+	var f *os.File
+	var line *charts.Line
+
+	if cacheChart {
+		_, err := os.Stat(lineChartFile)
+		if os.IsNotExist(err) {
+			f, line = createChart()
+			line.Render(w, f)
+		} else {
+			t, _ := template.ParseFiles(lineChartFile)
+			log.Printf("Executing the rendered template\n")
+			t.Execute(w, nil)
+		}
+	} else {
+		f, line = createChart()
+		line.Render(w, f)
+	}
+}
+
+func createChart() (*os.File, *charts.Line) {
 	line := charts.NewLine()
 	line.SetGlobalOptions(charts.TitleOpts{Title: "Logarithm Chart"}, charts.ToolboxOpts{Show: false})
 
@@ -98,9 +120,9 @@ func logarithmHandler(w http.ResponseWriter, _ *http.Request) {
 		AddYAxis("Common Logarithm, y = log\u2081\u2080(x)", commonLogVals).
 		AddYAxis("Natural Logarithm, y = log\u2091(x)", naturalLogVals)
 
-	f, err := os.Create("line.html")
+	f, err := os.Create(lineChartFile)
 	if err != nil {
 		log.Println(err)
 	}
-	line.Render(w, f)
+	return f, line
 }
