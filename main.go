@@ -70,6 +70,14 @@ func commonLogData() []float64 {
 	return r
 }
 
+func naturalLogData() []float64 {
+	r := make([]float64, maxXAxisValue)
+	for i := 1; i <= maxXAxisValue; i++ {
+		r[i-1] = math.Log(float64(i))
+	}
+	return r
+}
+
 /*	note: charts.ToolboxOpts{Show: true})
  *
  *
@@ -83,10 +91,12 @@ func logarithmHandler(w http.ResponseWriter, _ *http.Request) {
 	xAxisNames := xAxisData()
 	binaryLogVals := binaryLogData()
 	commonLogVals := commonLogData()
+	naturalLogVals := naturalLogData()
 
 	line.AddXAxis(xAxisNames).
 		AddYAxis("Binary Logarithm, y = log₂(x)", binaryLogVals).
-		AddYAxis("Common Logarithm, y = log\u2081\u2080(x)", commonLogVals)
+		AddYAxis("Common Logarithm, y = log\u2081\u2080(x)", commonLogVals).
+		AddYAxis("Natural Logarithm, y = log\u2091(x)", naturalLogVals)
 
 	f, err := os.Create("line.html")
 	if err != nil {
