@@ -69,7 +69,11 @@ func logTracing(next http.HandlerFunc) http.HandlerFunc {
 	}
 }
 
-/*
+func binaryLogData() {
+
+}
+
+/*	note: charts.ToolboxOpts{Show: true})
  *
  *
  *
@@ -77,11 +81,25 @@ func logTracing(next http.HandlerFunc) http.HandlerFunc {
 func singleLineChartHandler(w http.ResponseWriter, _ *http.Request) {
 
 	line := charts.NewLine()
-	line.SetGlobalOptions(charts.TitleOpts{Title: "Single Line Chart"}, charts.ToolboxOpts{Show: true})
-	line.AddXAxis(nameItems).
-		AddYAxis("商家A", randInt()).
-		AddYAxis("商家B", randInt())
-	f, err := os.Create("bar.html")
+	line.SetGlobalOptions(charts.TitleOpts{Title: "Logarithm Chart"}, charts.ToolboxOpts{Show: false})
+
+	nameItems := []string{"1", "2", "3", "4", "5", "6", "7", "8"}
+
+	// line.AddXAxis(nameItems).AddYAxis("商家A", randInt()).AddYAxis("商家B", randInt())
+
+	values := []float64{0, 1, 1.5849, 2, 2.3219, 2.5849, 2.8073, 3}
+
+	// nameItems := []string{"1", "2", "4", "8"}
+	// values := []float64{0, 1, 2, 3}
+
+	line.AddXAxis(nameItems).AddYAxis("Binary Logarithm, y = log₂(x)", values)
+
+	// smooth the line
+	line.SetSeriesOptions(
+	// charts.LineOpts{Smooth: true},
+	)
+
+	f, err := os.Create("line.html")
 	if err != nil {
 		log.Println(err)
 	}
