@@ -108,7 +108,14 @@ func logarithmHandler(w http.ResponseWriter, _ *http.Request) {
 
 func createChart() (*os.File, *charts.Line) {
 	line := charts.NewLine()
-	line.SetGlobalOptions(charts.TitleOpts{Title: "Logarithm Chart"}, charts.ToolboxOpts{Show: false})
+	line.SetGlobalOptions(
+		charts.TitleOpts{Title: "Logarithm Chart"}, charts.ToolboxOpts{Show: false},
+		charts.InitOpts{
+			PageTitle:       "Logarithm Charts",
+			BackgroundColor: "white",
+			// Theme:           charts.ThemeType.Vintage,
+		},
+	)
 
 	xAxisNames := xAxisData()
 	binaryLogVals := binaryLogData()

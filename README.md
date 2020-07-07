@@ -12,3 +12,14 @@
 
 ## https://go-echarts.github.io/go-echarts/
 
+## https://go-echarts.github.io/go-echarts/docs/quickstart
+
+## https://godoc.org/github.com/chenjiandongx/go-echarts/charts#LineOpts.MarkSeries
+
+## https://golang.org/src/math/log.go
+
+## https://en.wikipedia.org/wiki/Logarithm
+
+## https://en.wikipedia.org/wiki/Binary_logarithm
+
+## https://en.wikipedia.org/wiki/Natural_logarithm
