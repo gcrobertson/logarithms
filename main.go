@@ -20,7 +20,7 @@ const (
 	host          = ":8081"
 	lineChartFile = "line.html"
 	maxXAxisValue = 100
-	cacheChart    = false
+	cacheChart    = true
 )
 
 /*
@@ -113,7 +113,7 @@ func createChart() (*os.File, *charts.Line) {
 		charts.InitOpts{
 			PageTitle:       "Logarithm Charts",
 			BackgroundColor: "white",
-			// Theme:           charts.ThemeType.Vintage,
+			Theme:           charts.ThemeType.Vintage,
 		},
 	)
 
